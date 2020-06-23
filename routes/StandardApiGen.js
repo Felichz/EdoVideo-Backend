@@ -82,17 +82,10 @@ class StandardApiGen {
                     const { insertedId } = output;
 
                     let httpCode = 201;
-                    let message = '';
-                    if (insertedId) {
-                        message = 'Item created';
-                    } else {
-                        message = 'Could not create item';
-                        httpCode = 404;
-                    }
 
                     res.status(httpCode).json({
                         data: insertedId,
-                        message,
+                        message: 'Item created',
                     });
                 } catch (err) {
                     next(err);
