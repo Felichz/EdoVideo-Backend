@@ -6,10 +6,10 @@ class CategoryServiceMock extends StandardServiceMock {
         super(categoriesMock);
     }
 
-    pushMovie(categoryId, movieId) {
-        /// 111... Should correspond to the id of a repeated item
-        /// 222... Should correspond to the id of a non-existent item
+    /// 111... Should correspond to the id of a repeated item
+    /// 222... Should correspond to the id of a non-existent item
 
+    pushMovie(categoryId, movieId) {
         if (categoryId === '222222222222222222222222') {
             return { matchedCount: 0, modifiedCount: 0 };
         }

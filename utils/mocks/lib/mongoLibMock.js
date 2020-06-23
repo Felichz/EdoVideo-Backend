@@ -3,21 +3,9 @@ class MongoLibMock {
         this.collection = collection;
         this.dataMock = dataMock;
 
-        this.calledMethods = {
-            getAll: false,
-            get: false,
-            create: false,
-            update: false,
-            delete: false,
-        };
+        this.calledMethods = {};
 
-        this.receivedArguments = {
-            getAll: [],
-            get: [],
-            create: [],
-            update: [],
-            delete: [],
-        };
+        this.receivedArguments = {};
     }
 
     getAll(collection) {
@@ -55,6 +43,33 @@ class MongoLibMock {
         this.receivedArguments.delete = [...arguments];
 
         return { deletedCount: 1 };
+    }
+
+    /// 222... Correspond to the id of a non-existent item
+
+    getWithProjection(collection, id, projectionObj) {
+        this.calledMethods.getWithProjection = true;
+        this.receivedArguments.getWithProjection = [...arguments];
+
+        if (id === '222222222222222222222222') {
+            return null;
+        }
+
+        return { _id: id };
+    }
+
+    pushToArray(collection, id, arrayName, data) {
+        this.calledMethods.pushToArray = true;
+        this.receivedArguments.pushToArray = [...arguments];
+
+        return { matchedCount: 1, modifiedCount: 1 };
+    }
+
+    pullFromArray(collection, id, arrayName, pullId) {
+        this.calledMethods.pullFromArray = true;
+        this.receivedArguments.pullFromArray = [...arguments];
+
+        return { matchedCount: 1, modifiedCount: 1 };
     }
 
     isCalled(func) {

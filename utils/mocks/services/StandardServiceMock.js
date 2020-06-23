@@ -3,6 +3,9 @@ class StandardServiceMock {
         this.dataMock = dataMock;
     }
 
+    /// 111... Should correspond to the id of a repeated item
+    /// 222... Should correspond to the id of a non-existent item
+
     getAll() {
         return this.dataMock;
     }
