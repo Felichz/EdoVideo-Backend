@@ -6,7 +6,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const { moviesApi, categoriesApi } = require('./routes');
+const moviesApi = require('./routes/moviesApi');
+const categoriesApi = require('./routes/categoriesApi');
 
 const notFoundHandler = require('./utils/middlewares/notFoundHandler');
 
