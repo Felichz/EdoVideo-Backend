@@ -34,10 +34,8 @@ class StandardServiceMock {
     }
 
     delete(id) {
-        switch (id) {
-            case '222222222222222222222222':
-                return { deletedCount: 0 };
-                break;
+        if (id === '222222222222222222222222') {
+            return { deletedCount: 0 };
         }
 
         return { deletedCount: 1 };
