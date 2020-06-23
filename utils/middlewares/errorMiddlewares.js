@@ -1,8 +1,9 @@
+const debug = require('debug')('app:error');
 const config = require('../../config');
 const boom = require('@hapi/boom');
 
 function logErrors(err, req, res, next) {
-    console.log('Error Logger: \n', err);
+    debug('Error Logger: \n', err);
     next(err);
 }
 
