@@ -1,23 +1,23 @@
 {
-  "env": {
-    "es6": true,
-    "node": true,
-    "mocha": true,
-    "commonjs": true
-  },
-  "extends": ["prettier"],
-  "plugins": ["prettier"],
-  "parserOptions": {
-    "ecmaVersion": 2018
-  },
-  "rules": {
-    "linebreak-style": 0,
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
-    "no-console": "off"
-  }
+    "env": {
+        "es6": true,
+        "node": true,
+        "mocha": true,
+        "commonjs": true
+    },
+    "extends": ["prettier"],
+    "plugins": ["prettier"],
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "linebreak-style": 0,
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
+        "no-console": "off"
+    }
 }
