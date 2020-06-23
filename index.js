@@ -1,9 +1,13 @@
+const debug = require('debug')('app:server');
 const config = require('./config');
 const express = require('express');
-const app = express();
 
-// Middlewares
-const bodyParser = require('body-parser');
+// Import middlewares
+
+// Security
+var helmet = require('helmet');
+
+// Http request logger
 const morgan = require('morgan');
 
 const moviesApi = require('./routes/moviesApi');
@@ -17,12 +21,17 @@ const {
     errorHandler,
 } = require('./utils/middlewares/errorMiddlewares');
 
+// Initialize app router
+const app = express();
+
+// Use middlewares
+
+app.use(helmet());
+
 app.use(morgan('dev'));
 
 // Body Parser
-// app.use(express.json());
-// app.use('body');
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use('/api/movies', moviesApi);
 app.use('/api/categories', categoriesApi);
@@ -37,5 +46,5 @@ app.use(wrapErrors);
 app.use(errorHandler);
 
 app.listen(config.port, function () {
-    console.log(`Server listening to port ${config.port}`);
+    debug(`Server listening to port ${config.port}`);
 });
