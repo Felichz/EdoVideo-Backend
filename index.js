@@ -2,29 +2,32 @@ const debug = require('debug')('app:server');
 const config = require('./config');
 const express = require('express');
 
-// Import middlewares
+//// Import middlewares
 
 // Security
 var helmet = require('helmet');
 
+// Cors
+const cors = require('cors');
+
 // Http request logger
 const morgan = require('morgan');
 
+// Api routers
 const moviesApi = require('./routes/moviesApi');
 const categoriesApi = require('./routes/categoriesApi');
 
 const notFoundHandler = require('./utils/middlewares/notFoundHandler');
 
+// Error middlewares
 const {
     logErrors,
     wrapErrors,
     errorHandler,
 } = require('./utils/middlewares/errorMiddlewares');
 
-// Initialize app router
+////// Setting up app router and middlewares
 const app = express();
-
-// Use middlewares
 
 app.use(helmet());
 
@@ -40,10 +43,12 @@ app.use('/api/categories', categoriesApi);
 app.use(notFoundHandler);
 
 // We must put the error middlewares at the end so they
-// can catch the errors after they occur.
+// can catch errors after they occur.
 app.use(logErrors);
 app.use(wrapErrors);
 app.use(errorHandler);
+
+////// Make the server start listening for Http requests
 
 app.listen(config.port, function () {
     debug(`Server listening to port ${config.port}`);
