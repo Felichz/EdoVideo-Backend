@@ -31,6 +31,8 @@ const app = express();
 
 app.use(helmet());
 
+app.use(cors());
+
 app.use(morgan('dev'));
 
 // Body Parser
@@ -49,7 +51,6 @@ app.use(wrapErrors);
 app.use(errorHandler);
 
 ////// Make the server start listening for Http requests
-
 app.listen(config.port, function () {
     debug(`Server listening to port ${config.port}`);
 });
