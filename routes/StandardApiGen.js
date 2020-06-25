@@ -1,9 +1,10 @@
 const express = require('express');
 const analizeOutput = require('./utils/analizeOutput');
 
-const validationHandler = require('../utils/middlewares/schemaValidator');
 const schemaValidator = require('../utils/middlewares/schemaValidator');
 const { hexIdObjectSchema } = require('../utils/schemas/hexIdSchema');
+
+const cachedResponse = require('../utils/middlewares/cachedResponse');
 
 class StandardApiGen {
     constructor({ service, createItemSchema, updateItemSchema }) {
@@ -27,24 +28,33 @@ class StandardApiGen {
     }
 
     _genGetAll() {
-        this.apiRouter.get('/', async (req, res, next) => {
-            try {
-                const item = await this.service.getAll();
+        const FIVE_MINUTES = 300;
 
-                res.status(200).json({
-                    data: item,
-                    message: 'Items listed',
-                });
-            } catch (err) {
-                next(err);
+        this.apiRouter.get(
+            '/',
+            cachedResponse(FIVE_MINUTES),
+            async (req, res, next) => {
+                try {
+                    const item = await this.service.getAll();
+
+                    res.status(200).json({
+                        data: item,
+                        message: 'Items listed',
+                    });
+                } catch (err) {
+                    next(err);
+                }
             }
-        });
+        );
     }
 
     _genGet() {
+        const ONE_HOUR = 3600;
+
         this.apiRouter.get(
             '/:id',
             schemaValidator(hexIdObjectSchema, 'params'),
+            cachedResponse(ONE_HOUR),
             async (req, res, next) => {
                 try {
                     const item = await this.service.get(req.params.id);
